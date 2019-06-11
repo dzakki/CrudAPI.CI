@@ -25,4 +25,16 @@ class Article extends CI_Controller {
 	{
 		return $this->response($this->article_model->get('id', $id));
 	}
+	public function create()
+	{
+		return $this->response($this->article_model->create());	
+	}
+	public function update($id)
+	{
+		return $this->response($this->article_model->update('id', $id));
+	}
+	public function delete($id)
+	{
+		return $this->response($this->article_model->delete('id', $id));
+	}
 }
