@@ -73,4 +73,14 @@ class User_Model extends CI_Model
             }
         }
     }
+    public function is_valid()
+    {
+        $username = $this->input->post('username');
+        $password = $this->input->post('password');
+
+        $hash = $this->get('username', $username)->password;
+        if (password_verify($password, $hash)) 
+            return true;
+        return false;    
+    }
 }

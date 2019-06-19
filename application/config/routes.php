@@ -7,6 +7,9 @@ $route['api/user/(:num)']['POST'] = 'user/update/$1';
 $route['api/user/(:num)']['DELETE'] = 'user/delete/$1';
 $route['api/user/i']['POST'] = 'user/create';
 
+// auth
+$route['api/login']['POST'] = 'auth/login';
+
 // articles
 $route['api/articles']['GET'] = 'article/get_all';
 $route['api/article/(:num)']['GET'] = 'article/get/$1';
