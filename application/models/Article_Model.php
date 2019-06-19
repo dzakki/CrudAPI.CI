@@ -1,8 +1,5 @@
 <?php
 
-require_once APPATH .'Libraries/JWT.php';
-use \Firebase\JWT\JWT;
-
 class Article_Model extends CI_Model
 {
     public $table = 'news';

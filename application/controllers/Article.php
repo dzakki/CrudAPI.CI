@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+// require_once APPATH .'Libraries/JWT.php';
+// use \Firebase\JWT\JWT;
 
 class Article extends CI_Controller {
 
