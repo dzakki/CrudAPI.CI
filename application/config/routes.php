@@ -9,6 +9,7 @@ $route['api/user/i']['POST'] = 'user/create';
 
 // auth
 $route['api/login']['POST'] = 'auth/login';
+$route['api/check_token']['GET'] = 'auth/check_token';
 
 // articles
 $route['api/articles']['GET'] = 'article/get_all';

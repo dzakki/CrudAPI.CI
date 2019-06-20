@@ -24,7 +24,7 @@ class Auth extends CI_Controller {
 	{
 		$date = new DateTime();
 		if (!$this->user_model->is_valid()) {
-			$this->response([
+			return $this->response([
 				'success' 	=> false,
 				'message'	=> 'username atau password salah'
 			]);
@@ -36,5 +36,18 @@ class Auth extends CI_Controller {
 
 		$output['id_token'] = JWT::encode($payload, $this->secret);
 		$this->response($output);
+	}
+	public function check_token()
+	{
+		$jwt = $this->input->get_request_header('Authorization');
+		try{
+			$decoded = JWT::decode($jwt, $this->secret, array('HS256'));
+			var_dump($decoded);
+		} catch(\Exception $e) {
+			return $this->response([
+				'success' 	=> false,
+				'message'	=> 'gagal mengakses token'
+			]);
+		}
 	}
 }
