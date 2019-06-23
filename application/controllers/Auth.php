@@ -10,11 +10,16 @@ class Auth extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('user_model');
+
+		// ==== ALLOWING CORS 
+		header('Acces-Control-Allow-Origin: *');
+		header('Acces-Control-Allow-Methods: GET, PUT, POST, DELET, OPTIONS');
+		header('Acces-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description');
 	}
-	public function response($data)
+	public function response($data, $status)
 	{
 		$this->output
-			 ->set_status_header(200)
+			 ->set_status_header($status)
 			 ->set_content_type('application/json','utf-8')
 			 ->set_output(json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ))
 			 ->_display();
@@ -27,7 +32,7 @@ class Auth extends CI_Controller {
 			return $this->response([
 				'success' 	=> false,
 				'message'	=> 'username atau password salah'
-			]);
+			], 204);
 		}
 		$user = $this->user_model->get('username', $this->input->post('username'));
 		$payload['id'] 		 = $user->id_user;
@@ -42,12 +47,25 @@ class Auth extends CI_Controller {
 		$jwt = $this->input->get_request_header('Authorization');
 		try{
 			$decoded = JWT::decode($jwt, $this->secret, array('HS256'));
-			var_dump($decoded);
+			return $decoded->id;
 		} catch(\Exception $e) {
 			return $this->response([
 				'success' 	=> false,
 				'message'	=> 'gagal mengakses token'
-			]);
+			], 404);
+		}
+	}
+	public function delete($id)
+	{
+		if ($id_user = $this->check_token()) {
+			if ($id_user == $id) {
+				return $this->response($this->user_model->delete($id));
+			}else{
+				return $this->response([
+					'success' 	=> false,
+					'message'	=> 'gagal delete user'
+				], 403);
+			}
 		}
 	}
 }

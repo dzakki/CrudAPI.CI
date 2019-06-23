@@ -7,6 +7,10 @@ class User extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('user_model');
+		
+		header('Acces-Control-Allow-Origin: *');
+		header('Acces-Control-Allow-Methods: GET, PUT, POST, DELET, OPTIONS');
+		header('Acces-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description');
 	}
 	public function response($data)
 	{
